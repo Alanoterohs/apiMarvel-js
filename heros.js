@@ -40,6 +40,8 @@ function getAllHeros(set) {
 }
 
 function showHeros(data) {
+  // divHeros.style.display = 'none';
+  // paginationDiv.style.display = 'none';
   let newDiv = document.createElement('div');
   newDiv.classList.add('cards-heros');
   newDiv.innerHTML = `
@@ -75,7 +77,41 @@ function showAHero(id) {
   });
 };
 
-getAllHeros();
+function pagination(data) {
+  var page = data.offset;
+  var limit = data.limit;
+  var total = Math.ceil(data.total / limit);
+
+  let newDivPag = document.createElement('div');
+  let backPage = document.createElement('button');
+  let nextPage = document.createElement('button');
+  let space = document.createElement('span');
+
+  backPage.textContent = '<- Back';
+  backPage.addEventListener('click', back);
+  nextPage.textContent = 'Next ->';
+  nextPage.addEventListener('click', next);
+  space.textContent = ` page number ${page} of the ${total} `;
+
+  paginationDiv.appendChild(newDivPag);
+  newDivPag.appendChild(backPage);
+  newDivPag.appendChild(nextPage);
+  paginationDiv.appendChild(space);
+};
+
+function back() {
+  let offset = parseInt(sessionStorage.getItem('offset'));
+  offset -= 8;
+  sessionStorage.setItem('offset', offset);
+  getAllHeros(offset);
+};
+
+function next() {
+  let offset = parseInt(sessionStorage.getItem('offset'));
+  offset += 8;
+  sessionStorage.setItem('offset', offset);
+  getAllHeros(offset);
+};
 
 const filterSearch = document.querySelector('.search');
 filterSearch.addEventListener('keypress', (event) => {
@@ -103,66 +139,4 @@ function search(name) {
   });
 }
 
-
-
-
-
-
-
-
-
-function back() {
-  let set = parseInt(sessionStorage.getItem('id'));
-  set -= 3;
-  sessionStorage.setItem('id', set);
-  getAllHeros(set);
-};
-
-function next() {
-  let set = parseInt(sessionStorage.getItem('id'));
-  set += 4;
-  sessionStorage.setItem('id', set);
-  getAllHeros(set);
-};
-
-function pagination(data) {
-  var page = data.offset;
-  var limit = data.limit;
-  var total = Math.ceil(data.total / limit);
-
-  let newDivPag = document.createElement('div');
-  let backPage = document.createElement('button');
-  let nextPage = document.createElement('button');
-  let space = document.createElement('span');
-
-  backPage.textContent = '<- Back';
-  backPage.addEventListener('click', back);
-  nextPage.textContent = 'Next ->';
-  nextPage.addEventListener('click', next);
-  space.textContent = ` page number ${page} of the ${total} `;
-
-  //divHeros.style.display = 'none';
-  //paginationDiv.style.display = 'none';
-  paginationDiv.appendChild(newDivPag);
-  newDivPag.appendChild(backPage);
-  newDivPag.appendChild(nextPage);
-  paginationDiv.appendChild(space);
-};
-
-
-
-// newDivToHero.innerHTML = `
-// <div class= "div-aHero">
-// <div class="div-aHero">
-// <h3 class="title">${aHero.name}</h3>
-// <img
-// class = "img-aHero"
-// alt="${aHero.name}"
-// src="${aHero.thumbnail.path}.${aHero.thumbnail.extension}"
-// id="${aHero.id}">
-// </div>
-// <div class= "description-hero"><span>${aHero.description}</span>
-// </div>
-// <a class= "home-hero" href="index.html">Home</a>
-// </div>
-// `;
+getAllHeros(0); //seteo el offset
