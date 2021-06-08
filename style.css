@@ -2,6 +2,9 @@ html {
   background-color: white;
 }
 
+.hidden {
+  display: none;
+}
 
 .app {
   margin: 0;
@@ -68,7 +71,7 @@ html {
   appearance: none;
 }
 
-/* .div-aHero {
+.div-aHero {
   text-align: center;
 }
 
@@ -112,12 +115,21 @@ border-color: #f8f9fa;
   margin: 0 auto;
 }
 
-/* .list-heros {
+.list-heros {
   padding-top: 2.2em;
   max-width: 90%;
-} */
+}
 
 .cards-heros {
+  padding-top: 2em;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style:none;
+}
+
+.allHeros {
   padding-top: 2em;
   margin: 0 auto;
   display: flex;
